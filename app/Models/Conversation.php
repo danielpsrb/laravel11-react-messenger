@@ -29,4 +29,29 @@ class Conversation extends Model
     {
         return $this->belongsTo(User::class, 'user_id2');
     }
+
+    public static function getConversationsForSidebar(User $exceptUser)
+    {
+        $users = User::getUsersExceptUser($exceptUser);
+        $groups = Group::getGroupsForUser($exceptUser);
+        return $users->map(function (User $user) {
+            return $user->toConversationArray();
+        })->concat($groups->map(function (Group $group) {
+            return $group->toConversationArray();
+        }));
+    }
+
+    public function toConversationArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'is_group' => false,
+            'is_user' => true,
+            'is_admin' => (bool) $this->is_admin,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+            'last_message' => $this->last_message,
+        ];
+    }
 }
