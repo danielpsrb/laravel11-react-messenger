@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,14 +21,14 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'John Rhui',
             'email' => 'john@example.com',
-            'password' => bcrypt('johncena'),
+            'password' => Hash::make('john1234'),
             'is_admin' => true
         ]);
 
         User::factory()->create([
-            'name' => 'Karl Rhui',
-            'email' => 'karl@example.com',
-            'password' => bcrypt('karlzmen'),
+            'name' => 'Dans Ryota',
+            'email' => 'dansz@example.com',
+            'password' => Hash::make('ryota123'),
         ]);
 
         User::factory(8)->create();
